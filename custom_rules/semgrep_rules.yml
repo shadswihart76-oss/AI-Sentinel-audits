@@ -1,0 +1,23 @@
+rules:
+  - id: openclaw-user-id-ownership-check
+    message: "User identifier is read from request input; verify ownership and authorization checks."
+    languages: [python]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: $REQ.args.get("user_id")
+          - pattern: $REQ.GET.get("user_id")
+          - pattern: $REQ["user_id"]
+
+  - id: openclaw-variable-url-http-call
+    message: "HTTP call appears to use a variable URL/host; verify SSRF-safe destination validation."
+    languages: [python]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: requests.get($URL, ...)
+          - pattern: requests.post($URL, ...)
+          - pattern: requests.request($METHOD, $URL, ...)
+      - metavariable-pattern:
+          metavariable: $URL
+          pattern: $VAR

@@ -1,0 +1,7 @@
+openclaw:
+  modules:
+    ai_code_review:
+      runtime:
+        plugin_modules:
+          - "examples/plugins/custom_model_provider.py"
+        provider: "custom_echo"

@@ -1,0 +1,22 @@
+﻿# Python cache/artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual envs
+.venv/
+venv/
+
+# Generated output
+reports/
+*.log
+
+# Local UI/personal prefs
+.openclaw_dashboard_prefs.json
+
+# Local backup snapshots
+*.bak_*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

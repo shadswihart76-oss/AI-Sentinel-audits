@@ -1,0 +1,27 @@
+You are reviewing in-scope public code that performs HTTP requests based on user input.
+
+For the following code:
+- Identify any places where user-controlled URLs or hosts are used.
+- Explain whether there is validation or restriction on destinations.
+- Highlight patterns that could be risky for SSRF if misconfigured.
+- Suggest mitigations (allowlists, scheme checks, IP blocking, etc.).
+
+Do NOT suggest targeting internal IPs, metadata endpoints, or internal services.
+Stay at the level of design and validation.
+
+Code:
+<CODE_SNIPPET>
+
+Return JSON only.
+Use this schema:
+{
+  "findings": [
+    {
+      "title": "string",
+      "summary": "string",
+      "severity": "Low|Medium|High|Critical",
+      "category": "ssrf",
+      "recommendations": ["string"]
+    }
+  ]
+}

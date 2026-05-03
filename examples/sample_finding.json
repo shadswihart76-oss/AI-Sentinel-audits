@@ -1,0 +1,19 @@
+{
+  "title": "Missing authorization check in wallet transaction endpoint",
+  "asset": "https://api.example.com/v1/wallet/transactions",
+  "component": "wallet_service/transactions_handler.go",
+  "summary": "The endpoint appears to rely on a user-supplied identifier without verifying ownership.",
+  "severity": "High",
+  "category": "auth_access",
+  "recommendations": [
+    "Bind queries to the authenticated user identity instead of trusting user_id from the request.",
+    "Add authorization checks before returning transaction data."
+  ],
+  "source": "ai_code_review",
+  "likely_impact": 3,
+  "code_confidence": 0.8,
+  "pattern_severity": 3,
+  "metadata": {
+    "notes": "Testing should only use owned test accounts and avoid real user data."
+  }
+}

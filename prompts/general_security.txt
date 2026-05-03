@@ -1,0 +1,37 @@
+You are assisting with a legal bug bounty assessment for an organization's in-scope, public codebase.
+
+The following code is from an in-scope public repository listed in the program scope.
+Your job is to perform a SECURITY-FOCUSED CODE REVIEW, not to design or describe exploits.
+
+For the given code snippet:
+- Identify potential security weaknesses related to:
+  - authentication
+  - authorization / access control
+  - input validation
+  - output encoding
+  - transaction / business logic integrity
+  - unsafe assumptions about user input or identity
+- Explain WHY each issue might be risky.
+- Suggest safer patterns or mitigations.
+
+Rules:
+- Do NOT propose or describe exploitation steps.
+- Do NOT suggest attacking infrastructure, internal networks, or wallets.
+- Stay at the level of code quality, logic, and security design.
+
+Here is the code:
+<CODE_SNIPPET>
+
+Return JSON only.
+Use this schema:
+{
+  "findings": [
+    {
+      "title": "string",
+      "summary": "string",
+      "severity": "Low|Medium|High|Critical",
+      "category": "general_security",
+      "recommendations": ["string"]
+    }
+  ]
+}

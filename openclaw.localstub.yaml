@@ -1,0 +1,162 @@
+openclaw:
+  version: 0.3.0
+  contracts:
+    static_tool: '1'
+    model_provider: '1'
+    ai_finding_schema: '1'
+    scoring_api: '1'
+    ensemble_scoring: '1'
+    logging_format: '1'
+  program:
+    name: Coinbase
+    platform: HackerOne
+    scope_source: manual
+  scope:
+    domains:
+    - coinbase.com
+    - '*.coinbase.com'
+    - cbhq.net
+    - '*.cbhq.net'
+    - base.org
+    github_repos:
+    - coinbase/<IN_SCOPE_REPO_1>
+    - coinbase/<IN_SCOPE_REPO_2>
+    - coinbase/coinbase-wallet-sdk
+    - coinbase/admin-post.php
+    - program/admin-post.php
+    mobile_packages:
+    - com.coinbase.android
+    - com.coinbase.ios
+  guardrails:
+    allow_active_requests: false
+    allow_internal_ips: false
+    allow_metadata_endpoints: false
+    allow_bruteforce: false
+    allow_auth_bypass_testing: false
+  hardening:
+    graceful_fallback: true
+  logging:
+    level: INFO
+    lock_format: true
+    format: '%(asctime)s %(levelname)s [%(name)s] %(message)s'
+    datefmt: '%Y-%m-%dT%H:%M:%SZ'
+  modules:
+    passive_recon:
+      enabled: true
+      mode: local_clone_only
+      sources:
+      - github
+    static_analysis:
+      enabled: true
+      tools:
+      - semgrep
+      - bandit
+      - regex
+      plugin_modules: []
+      semgrep_rules: custom_rules/semgrep_rules.yml
+      semgrep_args: []
+      bandit_profile: ''
+      bandit_args: []
+      regex_rules_file: custom_rules/regex_rules.yml
+      regex_rules: []
+    ai_code_review:
+      enabled: true
+      model: stub-model
+      max_chunk_size: 4000
+      chunking:
+        mode: auto
+        min_chunk_size: 1200
+        max_chunk_size: 8000
+      parallel:
+        enabled: true
+        max_workers: 4
+      model_specialization:
+        auth_access: stub-model-auth
+        ssrf: stub-model-ssrf
+        general_security: stub-model-logic
+        input_validation: stub-model-input
+        crypto_security: stub-model-crypto
+        business_logic: stub-model-logic
+        trust_boundaries: stub-model-logic
+      model_fallback:
+        default:
+        - stub-model-fallback
+      ensemble:
+        enabled: true
+        models:
+        - stub-model
+        - stub-model-b
+        models_by_prompt:
+          auth_access:
+          - stub-model-auth
+          - stub-model-b
+          ssrf:
+          - stub-model-ssrf
+          - stub-model-b
+        model_weights:
+          stub-model: 1.0
+          stub-model-b: 0.9
+          stub-model-auth: 1.1
+          stub-model-ssrf: 1.0
+        category_priority:
+          auth_access: 0.2
+          ssrf: 0.1
+          trust_boundaries: 0.1
+        require_consensus: false
+        min_consensus_models: 2
+      schema_validation:
+        strict: false
+        allow_unknown_fields: false
+      learning:
+        enabled: true
+        memory_file: ./reports/learning_memory.json
+        max_context_entries: 20
+        max_records: 3000
+      runtime:
+        provider: command
+        graceful_fallback: true
+        timeout_seconds: 60
+        prompt_mode: file
+        plugin_modules: []
+        isolation:
+          clean_env: false
+          use_temp_workdir: false
+          allowed_env:
+          - PATH
+          - HOME
+          - TMP
+          - TEMP
+          - SYSTEMROOT
+        command:
+        - python3
+        - examples/local_model_stub.py
+        - --model
+        - '{model}'
+        - --prompt-file
+        - '{prompt_file}'
+      prompts:
+        general_security: prompts/general_security.txt
+        auth_access: prompts/auth_access.txt
+        ssrf: prompts/ssrf.txt
+        input_validation: prompts/input_validation.txt
+        crypto_security: prompts/crypto_security.txt
+        business_logic: prompts/business_logic.txt
+        trust_boundaries: prompts/trust_boundaries.txt
+    findings:
+      deduplicate: true
+      rank_by:
+      - likely_impact
+      - code_confidence
+      - pattern_severity
+      scoring:
+        severity_heuristics: true
+        confidence_heuristics: true
+        impact_heuristics: true
+        pattern_severity_heuristics: true
+    reporting:
+      enabled: true
+      template: templates/triage_friendly_report.md
+      output_dir: ./reports
+    cross_file_reasoning:
+      enabled: true
+      min_files_for_chain: 2

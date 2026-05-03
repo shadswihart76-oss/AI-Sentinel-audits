@@ -1,0 +1,32 @@
+You are reviewing in-scope public code for access control issues.
+
+For the following code:
+- Identify where authorization checks might be missing or insufficient.
+- Highlight any assumptions about user identity, roles, or ownership that could be unsafe.
+- Point out any patterns that resemble IDOR or privilege escalation risks.
+- Suggest how to enforce proper authorization.
+
+Precision rules for ownership/IDOR findings:
+- Only flag ownership-check/IDOR when identity or resource owner is request-controlled (query/body/path/form/cookie) and authorization binding is missing.
+- If code derives identity from authenticated context (for example `get_current_user_id`, `wp_get_current_user`, `req.user`, `request.user`, session principal) and no request-controlled user/account ID is used for object lookup, do not emit an ownership gap finding.
+- Do not classify open redirect URL validation problems as ownership/authz issues; treat them as redirect/input validation concerns.
+
+Do NOT propose exploitation steps or attack paths.
+Focus only on code-level weaknesses and mitigations.
+
+Code:
+<CODE_SNIPPET>
+
+Return JSON only.
+Use this schema:
+{
+  "findings": [
+    {
+      "title": "string",
+      "summary": "string",
+      "severity": "Low|Medium|High|Critical",
+      "category": "auth_access",
+      "recommendations": ["string"]
+    }
+  ]
+}

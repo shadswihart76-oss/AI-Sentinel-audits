@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openclaw-pipeline"
+version = "0.3.0"
+description = "OpenClaw v0.3 read-only security review pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "PyYAML==6.0.2"
+]
+
+[project.scripts]
+openclaw = "openclaw.cli:main"
+openclaw-dashboard = "openclaw.dashboard:main"
+
+[tool.setuptools]
+packages = ["openclaw"]

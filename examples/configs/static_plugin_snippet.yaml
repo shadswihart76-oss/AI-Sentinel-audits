@@ -1,0 +1,7 @@
+openclaw:
+  modules:
+    static_analysis:
+      plugin_modules:
+        - "examples/plugins/custom_static_plugin.py"
+      tools:
+        - "custom_tool"

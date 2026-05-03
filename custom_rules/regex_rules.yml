@@ -1,0 +1,17 @@
+rules:
+  - id: "regex-user-id-input"
+    pattern: "(user_id|account_id)\\s*=\\s*.*(request|args|query|params)"
+    severity: "Medium"
+    category: "auth_access"
+    message: "User/account identifier appears to be sourced from request input; verify ownership checks."
+    recommendations:
+      - "Bind resource access to authenticated identity context."
+      - "Avoid trusting caller-supplied principal identifiers."
+  - id: "regex-dynamic-url-outbound"
+    pattern: "(requests\\.(get|post|request)\\s*\\(\\s*[^\"'])"
+    severity: "Medium"
+    category: "ssrf"
+    message: "Outbound request appears to use non-literal URL; verify strict destination validation."
+    recommendations:
+      - "Apply allowlists and scheme restrictions."
+      - "Block private/loopback destinations at resolver and transport boundaries."

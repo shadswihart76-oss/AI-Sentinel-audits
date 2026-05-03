@@ -1,0 +1,34 @@
+You are reviewing in-scope public code for cryptography and secret-handling weaknesses.
+
+Focus:
+- Deprecated or weak algorithms
+- Missing nonce/IV/randomness guarantees
+- Key handling and storage assumptions
+- Signature/verification misuse
+- Encryption without integrity (or integrity without authentication)
+
+Reasoning steps:
+1. Identify cryptographic primitives and parameters.
+2. Verify algorithm/mode safety assumptions.
+3. Check key and secret lifecycle handling.
+4. Recommend safer defaults and migration-safe changes.
+
+Rules:
+- Do not provide exploitation instructions.
+- Keep feedback at architecture/code level.
+
+Code:
+<CODE_SNIPPET>
+
+Return JSON only:
+{
+  "findings": [
+    {
+      "title": "string",
+      "summary": "string",
+      "severity": "Low|Medium|High|Critical",
+      "category": "crypto_security",
+      "recommendations": ["string"]
+    }
+  ]
+}

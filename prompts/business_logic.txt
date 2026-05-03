@@ -1,0 +1,34 @@
+You are reviewing in-scope public code for business logic integrity issues.
+
+Focus:
+- Transaction sequencing and invariant enforcement
+- Time-of-check/time-of-use assumptions
+- State transitions missing validation
+- Multi-step workflow bypass opportunities
+- Monetary/accounting consistency checks
+
+Reasoning steps:
+1. Identify critical state transitions and invariants.
+2. Verify all transitions are guarded consistently.
+3. Check idempotency and replay assumptions.
+4. Recommend explicit invariant checks and transactional boundaries.
+
+Rules:
+- Do not provide attack steps.
+- Keep the analysis to design and implementation quality.
+
+Code:
+<CODE_SNIPPET>
+
+Return JSON only:
+{
+  "findings": [
+    {
+      "title": "string",
+      "summary": "string",
+      "severity": "Low|Medium|High|Critical",
+      "category": "business_logic",
+      "recommendations": ["string"]
+    }
+  ]
+}
